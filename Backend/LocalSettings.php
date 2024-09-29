@@ -61,7 +61,7 @@ $wgDBtype = 'mysql';
 $wgDBserver = '127.0.0.1';
 $wgDBname = 'wikmeup_db';
 $wgDBuser = 'wikiadm';
-$wgDBpassword = '\$wiwi12Prj';
+$wgDBpassword = '$wiwi12Prj';
 
 # MySQL specific settings
 $wgDBprefix = "";
@@ -150,4 +150,4 @@ wfLoadExtension( 'WikiEditor' );
 
 # End of automatically generated settings.
 # Add more configuration options below.
-Set $wgShowExceptionDetails = true;
+$wgShowExceptionDetails = true;
