@@ -1,0 +1,24 @@
+#делаем апстрим с именем "backend", используем айпишник сетев. интерф. хоста
+upstream backend {                      
+   server  10.0.2.201 weight=2; 
+   server  10.0.2.202 weight=2; 
+  }
+
+server {   #собственно единственный сервер слушает на 80 порту 
+        listen  80;    
+
+   location / {   #всё, что приходит на сервер, пересылаем на апстрим бэкенд 
+            proxy_pass http://backend;    
+                     
+            proxy_set_header Host $host;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header X-Real-IP $remote_addr;
+   }
+
+
+   # redirect server error pages to the static page     error_page    
+   error_page 404 /404.html;
+   location = /404.html {
+   }
+}
+
