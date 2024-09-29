@@ -312,6 +312,72 @@ do
   fi
 done 
 
+#Приветствие
+echo ''
+echo "***** Настраиваем задания cron для регулярного бэкапа БД на SLAVE *****"
+echo ''
+
+# проверяем кронтаб на возможные наши старые джобы по работе с бэкапом 
+grep -i 'slave' /etc/crontab  > /dev/null 2>&1 
+
+if  [ $? -eq 0 ]
+then
+ echo 'Удаление  старой записи с заданием для бэкапа - OK' 
+ echo '' 
+ sed -i '/slave/d' /etc/crontab 
+fi
+
+#создаем папку для хранения скрипта 
+if  ! [ -d  /var/jobs]
+then 
+ mkdir /var/jobs
+fi   
+
+#добавляем задание - раз в три минуты делаем бэкап
+if cp $gitTypeDirName/slave_backup_db_cron.sh /var/jobs/
+then 
+  echo 'Перенос скрипта автоматического бэкап - OK'
+  echo ''
+  echo -e  "*/3 *  *  *   *  root    /var/jobs/slave_backup_db_cron.sh" >> /etc/crontab
+  if  [ $? -eq 0 ]
+  then
+   echo 'Добаваление новой записи задания для бэкапа в crontab - OK   '  
+   echo ''
+  else 
+    echo " (!) Задание добавить не получилось"
+    echo '!! Скрипт прерывает работу !!'
+    exit 10
+   fi
+else
+    echo " (!) Отсутствует файл для выплонения задания"
+	 echo '!! Скрипт прерывает работу !!'
+    exit 11
+fi 
+
+#рестартую cron сервис.
+for service in cron
+do
+  echo "--- Ожидание - рестарт $service"
+  echo ''
+  systemctl restart $service
+  systemctl status $service | grep active > /dev/null 2>&1 
+  if [ $? -eq 0 ]
+  then
+      echo "Рестарт $service - OK"
+      echo '' 
+  else
+      echo " (!) $service не запустился"
+	    echo '!! Скрипт прерывает работу !!'
+      exit 12
+  fi
+done 
+
+#Визуальный контроль
+echo 'Добавлены следующие строки заданий:'
+echo '-----------------------------------'
+grep -i 'slave' /etc/crontab 
+
+
 #прощание
 echo ''
 echo '+++ СКРИПТ ВЫПОЛНИЛ ВСЕ ОПЕРАЦИИ И ЗАКОНЧИЛ РАБОТУ +++'

@@ -45,7 +45,7 @@ basesBackupFile="all_bases_$now"
 
 echo "--- Ожидание - выгружаем бэкап баз инстанса в  $backdir/$basesBackupFile "
 echo ''
-mysqldump -uroot -p'$qw12Prj' --set-gtid-purged=OFF  --all-databases > $backdir/$basesBackupFile.sql  2>/dev/null 
+mysqldump -uroot -p'$qw12Prj' --set-gtid-purged=OFF  --all-databases > $backdir/$basesBackupFile.sql  2>/dev/null  && \
 
 if  [ -f $backdir/$basesBackupFile.sql ]
 then 
@@ -55,7 +55,7 @@ then
  echo ''
 else  
   echo 'Не найден файл бэкапа'
-fi 
+fi   && \
 
 echo 'Последние пять выгрузок бэкапов:'
 echo '----------------------------------'
@@ -71,12 +71,3 @@ echo ''
 echo ''
 echo '+++ СКРИПТ ВЫПОЛНИЛ ВСЕ ОПЕРАЦИИ И ЗАКОНЧИЛ РАБОТУ +++'
 echo ''
-
-
-#echo -e '0 */8 * * * команда_на_исполнение' | sudo crontab -
-#
-#но уже следующее задание или запускалось командой sudo crontab -e, надо добавлять так:
-#sudo sh -c "echo '0 */8 * * * команда_на_исполнение' >> /var/spool/cron/crontabs/root"
-#и перезапуск cron
-#sudo /etc/init.d/cron restart
-
