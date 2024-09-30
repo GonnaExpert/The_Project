@@ -42,4 +42,5 @@ scrape_configs:
     # If prometheus-node-exporter is installed, grab stats about the local
     # machine by default.
     static_configs:
-      - targets: ['localhost:9100', '10.0.2.204:9100', '10.0.2.203:9100', '10.0.2.202:9100', '10.0.2.201:9100']
+      - targets: ['localhost:9100', '10.0.2.205:9100', '10.0.2.203:9100', '10.0.2.202:9100', '10.0.2.201:9100']
+
