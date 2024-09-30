@@ -16,9 +16,8 @@ echo "***** Восстанавливаем балансировщик на FRONT
 echo ''
 
 
-#1. Копир. файл конфиг в папку конфиг available
-#2. Копирую файл конфигурации вместо имеющегося.
-#путь к подготовленному и "дефолтному" файлу конфигурации mysqld.cnf МАСТЕР
+#1. Копир. файл конфиг вместо имеющегося
+#здесь - файл конфиги балансировщика в сайтс-эвейлебл nginx
 sourceFile=$gitTypeDirName/$cpFileName
 destinDir=/etc/nginx/sites-available
 destinFile=$destinDir/$cpFileName
