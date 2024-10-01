@@ -22,9 +22,17 @@ echo ''
 echo "***** Восстанавливаем БД для WIKI на MASTER *****"
 echo ''
 
+#Установка московского времени 
+timedatectl set-timezone Europe/Moscow
+echo 'Установлена единая в инфраструктуре временная зона (Европа, Москва) - Ok'
+#проверить  какое сейчас 
+echo "Время на $(hostname)" 
+date 
+echo '' 
+
 #рестартую mysql сервис.
 
-for service in mysql
+for service in  prometheus-node-exporter mysql 
 do
   echo "--- Ожидание - рестарт $service"
   echo ''
