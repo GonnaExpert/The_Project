@@ -14,9 +14,9 @@ gitTypeDirName=$gitDirName/$typeConfigDirName
 
 #Установка московского времени 
 timedatectl set-timezone Europe/Moscow
-#echo 'Установлена временная зона Москва - Ok'
+echo 'Установлена единая в инфраструктуре временная зона (Европа, Москва) - Ok'
 #проверить  какое сейчас 
-timedatectl status
+echo "Время на $hostname" 
 date 
 echo '' 
 
