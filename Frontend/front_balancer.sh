@@ -15,6 +15,14 @@ echo ''
 echo "***** Восстанавливаем балансировщик на FRONTEND *****"
 echo ''
 
+#Установка московского времени 
+timedatectl set-timezone Europe/Moscow
+echo 'Установлена единая в инфраструктуре временная зона (Европа, Москва) - Ok'
+#проверить  какое сейчас 
+echo "Время на $(hostname)" 
+date 
+echo '' 
+
 
 #1. Копир. файл конфиг вместо имеющегося
 #здесь - файл конфиги балансировщика в сайтс-эвейлебл nginx
@@ -60,7 +68,7 @@ if nginx -t
 then 
    echo ''
    #рестартую nginx сервис.
-   for service in nginx
+   for service in  prometheus-node-exporter nginx
    do
       echo "--- Ожидание - рестарт $service"
       echo ''
